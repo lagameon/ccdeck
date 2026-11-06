@@ -26,7 +26,20 @@ function ago(t) {
   if (s < 60) return "now"; if (s < 3600) return `${Math.floor(s / 60)}m`; if (s < 86400) return `${Math.floor(s / 3600)}h`;
   return `${Math.floor(s / 86400)}d`;
 }
-function toast(msg, ms = 2500) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("on"), ms); }
+// Toasts sit at the top (below the header on phones, top-right on desktop) so they never cover the composer.
+// Session events are clickable (open that session) and dismissable; plain notices never block taps.
+function toast(msg, ms = 2500, opts = {}) {
+  const box = $("#toasts"); if (!box) return;
+  const el = document.createElement("div");
+  el.className = `toast${opts.href ? " link" : ""}${opts.kind ? " " + opts.kind : ""}`;
+  el.innerHTML = `<span class="tmsg"></span>${opts.href ? `<button class="tx" aria-label="Dismiss">×</button>` : ""}`;
+  el.querySelector(".tmsg").textContent = msg;
+  const close = () => { el.classList.remove("on"); setTimeout(() => el.remove(), 200); };
+  if (opts.href) el.onclick = (e) => { if (!e.target.closest(".tx")) location.hash = opts.href; close(); };
+  box.prepend(el); while (box.children.length > 3) box.lastElementChild.remove();
+  requestAnimationFrame(() => el.classList.add("on"));
+  setTimeout(close, ms);
+}
 async function api(path, body) {
   const r = await fetch(path, body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) } : {});
   const d = await r.json().catch(() => ({}));
@@ -63,7 +76,7 @@ function notifyTransitions() {
       const j = data.jobs.find((x) => x.id === id);
       const msg = st === "blocked" ? `needs you: ${needsText(j.needs) || j.detail}` : `done: ${outText(j.output) || j.detail}`;
       // System notifications now come from the server (Web Push), so only an in-page toast here.
-      toast(`${j.name} — ${msg}`, 5000);
+      if (location.hash !== `#/job/${id}`) toast(`${j.name} — ${msg}`, 8000, { href: `#/job/${id}`, kind: st }); // already looking at it → no toast
       navigator.vibrate?.(120);
     }
   }
