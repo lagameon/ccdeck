@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- macOS login service. Replace /Users/you, copy to ~/Library/LaunchAgents/, then:
+     launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ccdeck.server.plist -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.ccdeck.server</string>
+  <key>ProgramArguments</key><array><string>/Users/you/.bun/bin/bun</string><string>/Users/you/ccdeck/server.ts</string></array>
+  <key>WorkingDirectory</key><string>/Users/you/ccdeck</string>
+  <key>EnvironmentVariables</key><dict><key>PATH</key><string>/Users/you/.local/bin:/Users/you/.bun/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string></dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>10</integer>
+  <key>StandardOutPath</key><string>/Users/you/Library/Logs/ccdeck.log</string>
+  <key>StandardErrorPath</key><string>/Users/you/Library/Logs/ccdeck.log</string>
+</dict></plist>

@@ -1,0 +1,13 @@
+{
+  "owner": "you@example.com",
+  "port": 7690,
+  "bindTailscale": true,
+  "baseUrl": "https://your-mac.your-tailnet.ts.net:8443",
+  "allowedHosts": [],
+  "notifyDone": true,
+  "hideBody": false,
+  "claude": "/Users/you/.local/bin/claude",
+  "tailscale": "/Applications/Tailscale.app/Contents/MacOS/Tailscale",
+  "quotaUrl": null,
+  "telegram": null
+}

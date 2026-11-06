@@ -1,0 +1,29 @@
+{
+  "name": "ccdeck",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/addon-web-links": "^0.12.0",
+    "@xterm/headless": "^6.0.0",
+    "@xterm/xterm": "^6.0.0",
+    "dompurify": "^3.4.17",
+    "marked": "^18.1.3",
+    "web-push": "^3.6.7"
+  },
+  "version": "0.1.0",
+  "description": "Web/phone remote for Claude Code background sessions over Tailscale",
+  "license": "MIT",
+  "scripts": {
+    "start": "bun server.ts"
+  },
+  "engines": {
+    "bun": ">=1.3.10"
+  }
+}

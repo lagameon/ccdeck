@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0f1115">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ccdeck</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="stylesheet" href="/vendor/xterm.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header id="top">
+  <button id="back" class="icon" title="Back to dashboard" hidden>‹</button>
+  <a id="home" href="#" class="brand">ccdeck</a>
+  <div id="title"><span id="subtitle"></span></div>
+  <div id="tabs" hidden>
+    <button data-tab="chat" class="tab" title="Alt+1">Chat</button>
+    <button data-tab="term" class="tab" title="Alt+2">Terminal</button>
+    <button data-tab="split" class="tab wide-only" title="Alt+3">Split</button>
+    <button data-tab="changes" class="tab" title="Alt+4">Changes</button>
+  </div>
+  <div class="spacer"></div>
+  <button id="findBtn" title="Switch session (⌘K)">⌘K</button>
+  <button id="notif" class="icon" title="Enable notifications">🔔</button>
+  <button id="newBtn" class="primary" title="New session (Alt+N)">＋ New</button>
+</header>
+
+<div id="body">
+  <aside id="side" hidden>
+    <input id="sideFilter" placeholder="Filter sessions…" autocomplete="off">
+    <div id="sideList"></div>
+  </aside>
+
+  <main id="dash" class="view"></main>
+
+  <section id="session" class="view" hidden>
+    <div id="meta"></div>
+    <div id="panes">
+      <div id="chat" class="pane">
+        <div id="events"></div>
+        <button id="jump" hidden>↓ latest</button>
+      </div>
+      <div id="term" class="pane" hidden><div id="xterm"></div></div>
+      <div id="changes" class="pane" hidden></div>
+    </div>
+    <div id="promptCard" hidden></div>
+    <div id="keys"></div>
+    <form id="composer">
+      <textarea id="input" rows="1"></textarea>
+      <button id="send" class="primary" type="submit">Send</button>
+    </form>
+  </section>
+</div>
+
+<dialog id="newDlg">
+  <form method="dialog" id="newForm">
+    <h3>New background session</h3>
+    <label>Directory<input id="newCwd" list="cwdList" required></label>
+    <datalist id="cwdList"></datalist>
+    <label>Name (optional)<input id="newName"></label>
+    <label>Prompt<textarea id="newPrompt" rows="5" required></textarea></label>
+    <label>Permission mode
+      <select id="newMode"><option value="">default</option><option>acceptEdits</option><option>plan</option><option>bypassPermissions</option></select>
+    </label>
+    <div class="row"><button value="cancel" formnovalidate>Cancel</button><button value="ok" class="primary">Start</button></div>
+  </form>
+</dialog>
+
+<dialog id="findDlg">
+  <input id="findInput" placeholder="Jump to session…  (↑↓ Enter)" autocomplete="off">
+  <div id="findList"></div>
+</dialog>
+
+<div id="toast"></div>
+<div id="tip" hidden></div>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
